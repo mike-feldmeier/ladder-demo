@@ -30,58 +30,62 @@ const matchFilterKey = (key, model, depth = 0) => key === makeKey(...Object.valu
 
 export default {
   name: 'HelloWorld',
-  data () {
+  data() {
     return {
       model: {
-        a: undefined, 
-        b: undefined, 
-        c: undefined, 
-        d: undefined, 
+        a: undefined,
+        b: undefined,
+        c: undefined,
+        d: undefined,
         e: undefined
       },
       selected: ''
     }
   },
   computed: {
-    computedOptionsA () {
+    computedOptionsA() {
       return options.a
     },
-    computedOptionsB () {
-      const result = options.b.filter(o => matchFilterKey(o.filterKey, this.model, 1))
-      if(result.length === 1) { this.model.b = result[0].value}
-      return result
+    computedOptionsB() {
+      return options.b.filter(o => matchFilterKey(o.filterKey, this.model, 1))
     },
-    computedOptionsC () {
-      const result = options.c.filter(o => matchFilterKey(o.filterKey, this.model, 2))
-      if(result.length === 1) { this.model.c = result[0].value}
-      return result
+    computedOptionsC() {
+      return options.c.filter(o => matchFilterKey(o.filterKey, this.model, 2))
     },
-    computedOptionsD () {
-      const result = options.d.filter(o => matchFilterKey(o.filterKey, this.model, 3))
-      if(result.length === 1) { this.model.d = result[0].value}
-      return result
+    computedOptionsD() {
+      return options.d.filter(o => matchFilterKey(o.filterKey, this.model, 3))
     },
-    computedOptionsE () {
-      const result = options.e.filter(o => matchFilterKey(o.filterKey, this.model, 4))
-      if(result.length === 1) { this.model.e = result[0].value}
-      return result
+    computedOptionsE() {
+      return options.e.filter(o => matchFilterKey(o.filterKey, this.model, 4))
     }
   },
   methods: {
-    clearModelToDepth (depth = 0) {
+    clearModelToDepth(depth = 0) {
       Object.keys(this.model).slice(depth).forEach(k => this.model[k] = undefined)
     }
   },
   watch: {
-    'model.e': function(value) {
+    'model.e': function (value) {
       // This is where we would update the Vuex store to register the filter instead of just updating the display...
       this.selected = value !== undefined ? JSON.stringify(this.model) : ''
+    },
+    'computedOptionsB': function (value) {
+      if (value.length === 1) { this.model.b = value[0].value }
+    },
+    'computedOptionsC': function (value) {
+      if (value.length === 1) { this.model.c = value[0].value }
+    },
+    'computedOptionsD': function (value) {
+      if (value.length === 1) { this.model.d = value[0].value }
+    },
+    'computedOptionsE': function (value) {
+      if (value.length === 1) { this.model.e = value[0].value }
     }
   }
 }
 </script>
 
 <style lang="stylus">
-  .q-select
-    width 20rem
+.q-select
+  width 20rem
 </style>
